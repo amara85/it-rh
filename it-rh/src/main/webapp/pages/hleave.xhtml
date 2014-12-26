@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<META http-equiv="Content-Type"
+		content="text/xhtml; charset=ISO-8859-7" />
+	<META http-equiv="Content-Type" content="text/css; charset=ISO-8859-7" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/css/style.css" />
+</h:head>
+
+<h:body>
+	<div style="width: 100%; height: 1px; border: 0px solid #ccc"></div>
+
+	<f:event type="preRenderView" listener="#{staffMB.welcomeMessage}" />
+	<div style="width: 100%; height: 100%">
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:menuitem value="Accueil" icon="ui-icon-home" style="width:100px;" />
+
+				<p:submenu label="Utilisateur" icon="ui-icon-person" style="width:120px;">
+					<p:menuitem value="Creation d'utilisateur"
+						action="adduser.xhtml?faces-redirect=true" ajax="false"
+						icon="ui-icon-plusthick" />
+					<p:menuitem value="Gestion des congés" action="hleave.xhtml?faces-redirect=true" ajax="false"
+						icon="ui-icon-gear" />
+				</p:submenu>
+
+
+
+
+				<f:facet name="options">
+					<p:spacer width="20" height="10" />
+					<p:menuButton value="#{staffMB.loggedStaffInitials}">
+						<p:menuitem value="Mon Profile" icon="ui-icon-contact" />
+						<p:menuitem value="Deconnecter" action="#{staffMB.logout}"
+							ajax="false" icon="ui-icon-extlink" />
+					</p:menuButton>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+		<p:layout>
+			<p:layoutUnit position="west" minSize="150" maxSize="200">
+				<h:form>
+					<h3>Ressources humaines</h3>
+					<p:menu toggleable="true">
+						<p:submenu label="Employees">
+							<p:menuitem value="Save" icon="ui-icon-disk" />
+							<p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w" />
+						</p:submenu>
+					</p:menu>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="center">
+				
+				<h:form id="form">
+                    <p:growl id="msgs" showDetail="true" />
+ 					<p:dataTable var="lea" value="#{leaveMB.leaveList}"
+						layout="grid" >
+						<f:facet name="header">Liste des congés</f:facet>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Id" />
+							</f:facet>
+							<h:outputText value="#{lea.con_id}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Nom" />
+							</f:facet>
+							<h:outputText value="#{lea.c_nom}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Service" />
+							</f:facet>
+							<h:outputText value="#{lea.c_service}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Responsable" />
+							</f:facet>
+							<h:outputText value="#{lea.c_respl}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Type de congé " />
+							</f:facet>
+							<h:outputText value="#{lea.c_type}" />
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Date début" />
+							</f:facet>
+							<h:outputText value="#{lea.s_date}" >
+							<f:convertDateTime pattern="yyyy-MM-dd" />
+						</h:outputText>
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Date fin" />
+							</f:facet>
+							<h:outputText value="#{lea.e_date}" >
+							<f:convertDateTime pattern="yyyy-MM-dd" />
+						</h:outputText>
+						</p:column>
+						<p:column >
+							<f:facet name="header">
+								<h:outputText value="Nombre de Jours " />
+							</f:facet>
+							<h:outputText value="#{lea.c_nbj}" />
+						</p:column>
+						<p:column style="width:32px;text-align: center">
+             <p:commandButton process="@this"
+									action="#{leaveMB.showLeaveDetails(leaveMB.selectedLeave)}" icon="ui-icon-search" title="View">
+                <f:setPropertyActionListener value="#{lea}" target="#{leaveMB.selectedLeave}" />
+            </p:commandButton>
+        </p:column>
+					</p:dataTable>
+					
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</h:body>
+</html>

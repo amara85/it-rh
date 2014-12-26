@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+   <META http-equiv="Content-Type" content="text/xhtml; charset=ISO-8859-7"/>
+	<META http-equiv="Content-Type" content="text/css; charset=ISO-8859-7"/>
+   <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/style.css"/>
+   <link href="#{request.contextPath}/images/STS.jpg" type="image/x-icon" rel="shortcut icon"/>
+   
+</h:head>
+
+<h:body>
+    
+	<h:form styleClass="logintest"></h:form>
+	<h:form id="login"  styleClass="loginForm">
+	     <h:panelGrid class="panel1" columns="1" styleClass="logo" >
+					<f:facet name="header" >
+						<p:graphicImage
+							value="/images/Logo.png"
+							 />
+					</f:facet>
+					</h:panelGrid>
+		 <p:messages id="loginmsg" severity="warn" showDetail="true"/>
+	     <p:growl for="loginmsg" severity="warn" life="3000" />
+		<p:panel header="Se Connecter">
+			<h:panelGrid columns="2" cellpadding="4" styleClass="centered">
+				<h:outputText value="Login: " />
+				<p:inputText value="#{userMB.user_login}" />
+
+				<h:outputText value="Mot de Passe: " />
+				<p:password value="#{userMB.user_password}" />
+
+                <h:outputText />
+				<p:commandButton value="Se Connecter" action="#{userMB.login}" update="loginmsg" ajax="false"/>
+
+			</h:panelGrid>
+			
+		</p:panel>
+	</h:form>
+	
+		
+</h:body>
+</html>

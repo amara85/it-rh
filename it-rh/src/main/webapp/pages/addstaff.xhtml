@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<META http-equiv="Content-Type"
+		content="text/xhtml; charset=ISO-8859-7" />
+	<META http-equiv="Content-Type" content="text/css; charset=ISO-8859-7" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/css/style.css" />
+	<link href="#{request.contextPath}/images/STS.jpg" type="image/x-icon"
+		rel="shortcut icon" />
+</h:head>
+
+<h:body>
+	<div style="width: 100%; height: 1px; border: 0px solid #ccc"></div>
+
+
+	<div style="width: 100%; height: 100%">
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:menuitem value="Accueil" icon="ui-icon-home"
+					action="home.xhtml?faces-redirect=true" style="width:100px;" />
+
+				<p:submenu label="Utilisateur" icon="ui-icon-person"
+					style="width:120px;">
+					<p:menuitem value="Creation d'utilisateur"
+						action="addstaff.xhtml?faces-redirect=true" ajax="false"
+						icon="ui-icon-plusthick" />
+					<p:menuitem value="Gestion des congés"
+						action="hleave.xhtml?faces-redirect=true" ajax="false"
+						icon="ui-icon-gear" />
+				</p:submenu>
+
+
+
+
+
+				<f:facet name="options">
+					<p:spacer width="20" height="10" />
+					<p:menuButton value="#{staffMB.loggedStaffInitials}">
+						<p:menuitem value="Mon Profile" icon="ui-icon-contact" />
+						<p:menuitem value="Deconnecter" action="#{staffMB.logout}"
+							ajax="false" icon="ui-icon-extlink" />
+					</p:menuButton>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+		<p:layout style="hight:1000px">
+			<p:layoutUnit position="west" resizable="true" minSize="100"
+				maxSize="200">
+				<h:form>
+					<h3>Ressources humaines</h3>
+					<p:menu toggleable="true">
+						<p:submenu label="Employees">
+							<p:menuitem value="Save" icon="ui-icon-disk" />
+							<p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w" />
+						</p:submenu>
+					</p:menu>
+				</h:form>
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<h:form id="editstaff" enctype="multipart/form-data"
+					style="width:100%;hight:100%;">
+
+					<p:messages id="staffmsg" severity="warn" showDetail="true" />
+					<p:growl id="msgs" showDetail="true" />
+					<p:panelGrid
+						style="width:80%; position: relative; right:-50px; margin-top:20px;">
+						<f:facet name="header">
+							<p:row>
+								<p:column colspan="7"> FICHE EMPLOYE </p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+								</p:column>
+								<p:column colspan="6">photo</p:column>
+							</p:row>
+						</f:facet>
+
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Matricule" />
+							</p:column>
+							<p:column style="font-weight: bold;">
+								<p:inputText value="#{staffMB.staffid}" />
+							</p:column>
+							<p:column rowspan="8" colspan="1" styleClass="ui-widget-header">
+							</p:column>
+							<p:column rowspan="8" colspan="1">
+								<p:graphicImage value="/images/users/aduser2-logo.png"
+									style=" display: block; margin-left: auto; margin-right: auto" />
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Prénom" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffFirstName}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Nom " />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffLastName}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Nom de naissance" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffMiddleName}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Date de naissance" />
+							</p:column>
+							<p:column>
+								<p:calendar id="event" value="#{staffMB.staffBirthday}"
+									navigator="true">
+									<p:ajax event="dateSelect" listener="#{staffMB.onDateSelect}"
+										update="msgs" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Sexe" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffGender}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Adresse" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffAdress}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Ville" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffCity}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Code postal" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffCityZipCode}" />
+							</p:column>
+							<p:column rowspan="3" colspan="5" styleClass="ui-widget-header">
+								<p:fileUpload
+									fileUploadListener="#{staffMB.handleFileUpload}"
+									mode="advanced" update="msgs" label="Choose a file"
+									sizeLimit="10485760" auto="true"
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+									invalidSizeMessage="The maximum file size allowed is 10 Megabytes !"
+									invalidFileMessage="You are allowed to upload only images !" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Etat Civil" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffMaritalStatus}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Nationalité" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffNationality}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="8" styleClass="ui-widget-header">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Numéro carte d'identité" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffcin}" />
+							</p:column>
+							<p:column rowspan="14" colspan="5" styleClass="ui-widget-header">
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Numéro passeport" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffPassport}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Numéro permis" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffPermis}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="8" styleClass="ui-widget-header">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Numéro de téléphone mobile" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffTelMobile}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Numéro de téléphone fixe" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffTelWork}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Adresse électronique" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffEmail}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="8" styleClass="ui-widget-header">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Nom d'utilisateur" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.stafflogin}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Mot de passe" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffpassword}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="8" styleClass="ui-widget-header">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;">
+								<h:outputLabel value="Type contrat" />
+							</p:column>
+							<p:column>
+								<p:inputText value="#{staffMB.staffStatus}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="8" styleClass="ui-widget-header">
+								<p:spacer height="0" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="font-weight: bold;"
+								styleClass="ui-widget-header">
+								<p:commandButton value="Enregistrer" ajax="false"
+									update="staffmsg" action="#{staffMB.addStaff}">
+
+								</p:commandButton>
+							</p:column>
+							<p:column styleClass="ui-widget-header">
+								<p:commandButton value="Annuler" ajax="false" update="staffmsg"
+									action="#{staffMB.reset}">
+
+								</p:commandButton>
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+
+</h:body>
+</html>

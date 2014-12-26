@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<META http-equiv="Content-Type"
+		content="text/xhtml; charset=ISO-8859-7" />
+	<META http-equiv="Content-Type" content="text/css; charset=ISO-8859-7" />
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/css/style.css" />
+	<link href="#{request.contextPath}/images/STS.jpg" type="image/x-icon"
+		rel="shortcut icon" />
+</h:head>
+
+<h:body>
+	<div style="width: 100%; height: 1px; border: 0px solid #ccc"></div>
+
+
+	<div style="width: 100%; height: 100%">
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:menuitem value="Accueil" icon="ui-icon-home"
+					action="home.xhtml?faces-redirect=true" style="width:100px;" />
+
+				<p:submenu label="Users" icon="ui-icon-person" style="width:120px;">
+					<p:menuitem value="Create User"
+						action="adduser.xhtml?faces-redirect=true" ajax="false"
+						icon="ui-icon-plusthick" />
+					<p:menuitem value="Help" url="#" icon="ui-icon-help" />
+				</p:submenu>
+
+
+
+
+
+				<f:facet name="options">
+					<p:spacer width="20" height="10" />
+					<p:menuButton value="#{userMB.loggedUserInitials}">
+						<p:menuitem value="Mon Profile" icon="ui-icon-contact" />
+						<p:menuitem value="Deconnecter" action="#{userMB.logout}"
+							ajax="false" icon="ui-icon-extlink" />
+					</p:menuButton>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+		<p:layout>
+			<p:layoutUnit position="west" resizable="true" minSize="100"
+				maxSize="200">
+				<h:form>
+					<h3>Ressources humaines</h3>
+					<p:menu toggleable="true">
+						<p:submenu label="Employees">
+							<p:menuitem value="Save" icon="ui-icon-disk" />
+							<p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w" />
+						</p:submenu>
+					</p:menu>
+				</h:form>
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<h:form id="adduser" style="width:100%;hight:100%;">
+					<p:messages id="loginmsg" severity="warn" showDetail="true" />
+					<p:growl for="loginmsg" severity="warn" life="3000" />
+					<p:panel header="Add User">
+						<p:panelGrid columns="2" cellpadding="2">
+
+							<h:outputText value="Id: " />
+							<p:inputText value="#{userMB.id_user}" />
+
+							<h:outputText value="Name: " />
+							<p:inputText value="#{userMB.user_name}" />
+
+							<h:outputText value="Surname: " />
+							<p:inputText value="#{userMB.user_surname}" />
+
+							<h:outputText value="Login: " />
+							<p:inputText value="#{userMB.user_login}" />
+
+							<h:outputText value="Password: " />
+							<p:inputText value="#{userMB.user_password}" />
+
+							<h:outputText />
+							<h:outputText />
+							<p:fileUpload fileUploadListener="#{userMB.upload}"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="100000"
+								description="Select Images"
+								mode="advanced" />
+
+							<h:outputText />
+
+							<p:commandButton value="Add" action="#{userMB.addUser}"
+								update="loginmsg" ajax="false" />
+							<p:commandButton value="Reset" action="#{userMB.reset}"
+								update="loginmsg" ajax="false" />
+
+						</p:panelGrid>
+					</p:panel>
+				</h:form>
+			</p:layoutUnit>
+		</p:layout>
+
+
+
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</h:body>
+</html>
